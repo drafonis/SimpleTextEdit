@@ -37,6 +37,18 @@ SimpleTextEdit::SimpleTextEdit(QWidget *parent)
 		if (!connect(ui.actionNew, SIGNAL(triggered()), this, SLOT(create_newFile()))) {
 			throw ConnectionCreationFailedException;
 		}
+		if (!connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(save()))) {
+			throw ConnectionCreationFailedException;
+		}
+		if (!connect(ui.textEdit, SIGNAL(textChanged()), this, SLOT(enableSave()))) {
+			throw ConnectionCreationFailedException;
+		}
+		if (!connect(ui.actionSave, SIGNAL(triggered()), this, SLOT(save()))) {
+			throw ConnectionCreationFailedException;
+		}
+		if (!connect(ui.actionAbout_SimpleTextEdit, SIGNAL(triggered()), this, SLOT(about()))) {
+			throw ConnectionCreationFailedException;
+		}
 	}
 
 	catch (QException& e) {
@@ -103,7 +115,6 @@ void SimpleTextEdit::open()
 			ui.textEdit->setPlainText(content);
 			txtSrc.setHasContent();
 			fileStatus->setText("File Open: Yes");
-			ui.actionSave->setEnabled(true);
 		}
 	}
 }
@@ -144,7 +155,33 @@ void SimpleTextEdit::saveAs()
 	txtSrc.setHasContent();
 	txtSrc = man.write(stdFileName, content);
 	fileStatus->setText("File Open: Yes");
-	ui.actionSave->setEnabled(true);
+}
+
+void SimpleTextEdit::save()
+{
+	if (txtSrc.isModified()) {
+		std::string stdFileName = txtSrc.getSrc();
+		std::string content = ui.textEdit->toPlainText().toStdString();
+		txtSrc = man.write(stdFileName, content);
+		fileStatus->setText("File Open: Yes");
+		ui.actionSave->setEnabled(false);
+	}
+}
+
+void SimpleTextEdit::enableSave()
+{
+	if (ui.actionSave->isEnabled()) ui.actionSave->setEnabled(false);
+	else { 
+		ui.actionSave->setEnabled(true);
+		txtSrc.setModified();
+	}
+}
+
+void SimpleTextEdit::about()
+{
+	QString aboutMessage = QString::fromUtf8("SimpleTextEdit is a simple text editor.\nCopyright 2016 Pavel Shekhter, All Rights Reserved. \nFor technical support, email pshekhter@gmail.com.");
+	QMessageBox::about(this, "About SimpleTextEdit",
+		aboutMessage);
 }
 
 

@@ -7,6 +7,7 @@ private:
 	std::string strSource;
 	std::string strContent;
 	bool bHasContent = false;
+	bool bIsModified = false;
 public:
 	TextSource();
 	~TextSource();
@@ -17,5 +18,7 @@ public:
 	bool setContent(std::string);
 	bool hasContent();
 	void setHasContent();
+	bool isModified();
+	void setModified();
 };
 

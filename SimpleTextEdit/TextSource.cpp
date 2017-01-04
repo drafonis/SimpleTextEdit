@@ -57,3 +57,13 @@ void TextSource::setHasContent()
 {
 	bHasContent = !bHasContent;
 }
+
+bool TextSource::isModified()
+{
+	return bIsModified;
+}
+
+void TextSource::setModified()
+{
+	bIsModified = !bIsModified;
+}
