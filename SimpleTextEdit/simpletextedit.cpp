@@ -115,6 +115,7 @@ void SimpleTextEdit::open()
 			ui.textEdit->setPlainText(content);
 			txtSrc.setHasContent();
 			fileStatus->setText("File Open: Yes");
+			txtSrc.setModified();
 		}
 	}
 }
@@ -136,6 +137,7 @@ void SimpleTextEdit::create_newFile()
 		QString content = QString::fromStdString(txtSrc.getContent());
 		ui.textEdit->setPlainText(content);
 		ui.actionSave->setEnabled(false);
+		txtSrc.setModified();
 	}
 }
 
@@ -155,6 +157,7 @@ void SimpleTextEdit::saveAs()
 	txtSrc.setHasContent();
 	txtSrc = man.write(stdFileName, content);
 	fileStatus->setText("File Open: Yes");
+	txtSrc.setModified();
 }
 
 void SimpleTextEdit::save()
@@ -165,15 +168,14 @@ void SimpleTextEdit::save()
 		txtSrc = man.write(stdFileName, content);
 		fileStatus->setText("File Open: Yes");
 		ui.actionSave->setEnabled(false);
+		txtSrc.setModified();
 	}
 }
 
 void SimpleTextEdit::enableSave()
 {
-	if (ui.actionSave->isEnabled()) ui.actionSave->setEnabled(false);
-	else { 
+	if (txtSrc.isModified()) {
 		ui.actionSave->setEnabled(true);
-		txtSrc.setModified();
 	}
 }
 
