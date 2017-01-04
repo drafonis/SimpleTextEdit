@@ -179,7 +179,7 @@ void SimpleTextEdit::enableSave()
 
 void SimpleTextEdit::about()
 {
-	QString aboutMessage = QString::fromUtf8("SimpleTextEdit is a simple text editor.\nCopyright 2016 Pavel Shekhter, All Rights Reserved. \nFor technical support, email pshekhter@gmail.com.");
+	QString aboutMessage = QString::fromUtf8("SimpleTextEdit is a simple text editor.\nFor technical support, email pshekhter@gmail.com.");
 	QMessageBox::about(this, "About SimpleTextEdit",
 		aboutMessage);
 }
