@@ -79,6 +79,7 @@ public:
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionUndo = new QAction(SimpleTextEditClass);
         actionUndo->setObjectName(QStringLiteral("actionUndo"));
+        actionUndo->setEnabled(false);
         actionRedo = new QAction(SimpleTextEditClass);
         actionRedo->setObjectName(QStringLiteral("actionRedo"));
         actionRedo->setEnabled(false);
@@ -92,6 +93,7 @@ public:
         actionDelete->setObjectName(QStringLiteral("actionDelete"));
         actionSelect_All = new QAction(SimpleTextEditClass);
         actionSelect_All->setObjectName(QStringLiteral("actionSelect_All"));
+        actionSelect_All->setEnabled(false);
         actionHelp = new QAction(SimpleTextEditClass);
         actionHelp->setObjectName(QStringLiteral("actionHelp"));
         actionAbout_SimpleTextEdit = new QAction(SimpleTextEditClass);
