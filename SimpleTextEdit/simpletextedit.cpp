@@ -49,6 +49,12 @@ SimpleTextEdit::SimpleTextEdit(QWidget *parent)
 		if (!connect(ui.actionAbout_SimpleTextEdit, SIGNAL(triggered()), this, SLOT(about()))) {
 			throw ConnectionCreationFailedException;
 		}
+		if (!connect(ui.textEdit, SIGNAL(textChanged()), this, SLOT(textExists()))) {
+			throw ConnectionCreationFailedException;
+		}
+		if (!connect(ui.actionUndo, SIGNAL(triggered()), this, SLOT(undo()))) {
+			throw ConnectionCreationFailedException;
+		}
 	}
 
 	catch (QException& e) {
@@ -184,6 +190,25 @@ void SimpleTextEdit::about()
 	QString aboutMessage = QString::fromUtf8("SimpleTextEdit is a simple text editor.\nFor technical support, email pshekhter@gmail.com.");
 	QMessageBox::about(this, "About SimpleTextEdit",
 		aboutMessage);
+}
+
+void SimpleTextEdit::textExists()
+{
+	if (!undoAvail) {
+		ui.actionUndo->setEnabled(true);
+		ui.textEdit->undoAvailable(true);
+		undoAvail = true;
+	}
+	else {
+		ui.actionUndo->setEnabled(false);
+		ui.textEdit->undoAvailable(false);
+		undoAvail = false;
+	}
+}
+
+void SimpleTextEdit::undo()
+{
+	ui.textEdit->undo();
 }
 
 
