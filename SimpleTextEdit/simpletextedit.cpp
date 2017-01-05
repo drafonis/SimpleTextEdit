@@ -55,6 +55,9 @@ SimpleTextEdit::SimpleTextEdit(QWidget *parent)
 		if (!connect(ui.actionUndo, SIGNAL(triggered()), this, SLOT(undo()))) {
 			throw ConnectionCreationFailedException;
 		}
+		if (!connect(ui.actionSelect_All, SIGNAL(triggered()), this, SLOT(select_all()))) {
+			throw ConnectionCreationFailedException;
+		}
 	}
 
 	catch (QException& e) {
@@ -204,11 +207,23 @@ void SimpleTextEdit::textExists()
 		ui.textEdit->undoAvailable(false);
 		undoAvail = false;
 	}
+	std::string content = ui.textEdit->toPlainText().toStdString();
+	if (content.length() > 0) {
+		ui.actionSelect_All->setEnabled(true);
+	}
+	else if (content.length() <= 0) {
+		ui.actionSelect_All->setEnabled(false);
+	}
 }
 
 void SimpleTextEdit::undo()
 {
 	ui.textEdit->undo();
+}
+
+void SimpleTextEdit::select_all()
+{
+	ui.textEdit->selectAll();
 }
 
 
